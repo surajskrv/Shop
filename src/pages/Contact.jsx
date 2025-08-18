@@ -9,6 +9,8 @@ export default function Contact() {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("idle"); // 'idle' | 'sending' | 'success' | 'error'
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({ name: "", email: "", message: "" });
+  const [touched, setTouched] = useState({ name: false, email: false, message: false });
 
   const isValidEmail = (value) => {
     // Basic email regex for client-side validation
@@ -19,14 +21,20 @@ export default function Contact() {
     e.preventDefault();
     setError("");
 
-    if (!name.trim() || !email.trim() || !message.trim()) {
+    // Mark all fields as touched and validate form
+    const allTouched = { name: true, email: true, message: true };
+    setTouched(allTouched);
+
+    const nextErrors = {
+      name: name.trim() ? "" : "Name is required.",
+      email: email.trim() ? (isValidEmail(email) ? "" : "Please enter a valid email address.") : "Email is required.",
+      message: message.trim() ? "" : "Message is required.",
+    };
+    setFieldErrors(nextErrors);
+    const hasError = Object.values(nextErrors).some(Boolean);
+    if (hasError) {
       setStatus("error");
-      setError("Please fill in all fields.");
-      return;
-    }
-    if (!isValidEmail(email)) {
-      setStatus("error");
-      setError("Please enter a valid email address.");
+      setError("Please fix the errors below and try again.");
       return;
     }
 
@@ -51,6 +59,8 @@ export default function Contact() {
       setName("");
       setEmail("");
       setMessage("");
+      setTouched({ name: false, email: false, message: false });
+      setFieldErrors({ name: "", email: "", message: "" });
     } catch (err) {
       setStatus("error");
       setError("Sorry, we couldn't send your message. Please try again later.");
@@ -75,10 +85,21 @@ export default function Contact() {
                 className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-safety"
                 placeholder="Your Name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  setName(v);
+                  setFieldErrors((prev) => ({
+                    ...prev,
+                    name: v.trim() ? "" : "Name is required.",
+                  }));
+                }}
+                onBlur={() => setTouched((t) => ({ ...t, name: true }))}
                 disabled={status === "sending"}
                 required
               />
+              {touched.name && fieldErrors.name && (
+                <p className="text-sm text-red-600">{fieldErrors.name}</p>
+              )}
             </div>
             <div className="flex flex-col gap-2 text-left">
               <label htmlFor="email" className="font-semibold text-steel">Email</label>
@@ -88,10 +109,21 @@ export default function Contact() {
                 className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-safety"
                 placeholder="you@email.com"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  setEmail(v);
+                  setFieldErrors((prev) => ({
+                    ...prev,
+                    email: v.trim() ? (isValidEmail(v) ? "" : "Please enter a valid email address.") : "Email is required.",
+                  }));
+                }}
+                onBlur={() => setTouched((t) => ({ ...t, email: true }))}
                 disabled={status === "sending"}
                 required
               />
+              {touched.email && fieldErrors.email && (
+                <p className="text-sm text-red-600">{fieldErrors.email}</p>
+              )}
             </div>
             <div className="flex flex-col gap-2 text-left">
               <label htmlFor="message" className="font-semibold text-steel">Message</label>
@@ -101,10 +133,21 @@ export default function Contact() {
                 className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-safety"
                 placeholder="How can we help you?"
                 value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  setMessage(v);
+                  setFieldErrors((prev) => ({
+                    ...prev,
+                    message: v.trim() ? "" : "Message is required.",
+                  }));
+                }}
+                onBlur={() => setTouched((t) => ({ ...t, message: true }))}
                 disabled={status === "sending"}
                 required
               />
+              {touched.message && fieldErrors.message && (
+                <p className="text-sm text-red-600">{fieldErrors.message}</p>
+              )}
             </div>
             {status === "error" && error && (
               <div className="text-red-600 bg-red-50 border border-red-200 rounded px-4 py-2">{error}</div>
@@ -117,7 +160,14 @@ export default function Contact() {
               disabled={status === "sending"}
               className="bg-safety text-white px-8 py-3 rounded-lg font-semibold text-lg shadow hover:bg-orange-600 transition self-end disabled:opacity-60"
             >
-              {status === "sending" ? "Sending..." : "Send Message"}
+              {status === "sending" ? (
+                <span className="inline-flex items-center gap-2">
+                  <span className="h-4 w-4 border-2 border-white/70 border-t-transparent rounded-full animate-spin" />
+                  Sending...
+                </span>
+              ) : (
+                "Send Message"
+              )}
             </button>
           </form>
         </div>

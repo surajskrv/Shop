@@ -1,11 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Roboto', system-ui, sans-serif;
   background-color: #f7f7f7;
-  color: #222;
+  color: #333333; /* matches tailwind color 'dark-steel' */
+}
+
+@layer components {
+  .btn-secondary {
+    @apply bg-transparent border border-industrial text-industrial hover:bg-industrial hover:text-white px-4 py-2 rounded-lg font-semibold transition;
+  }
 }
