@@ -16,10 +16,8 @@ const QuotePage = () => {
   const [touched, setTouched] = useState({ widthCm: false, heightCm: false, material: false, complexity: false });
 
   const materialOptions = [
+    { label: "Iron", value: "iron" },
     { label: "Steel", value: "steel" },
-    { label: "Aluminum", value: "aluminum" },
-    { label: "Copper", value: "copper" },
-    { label: "Titanium", value: "titanium" },
   ];
 
   const validateAll = () => {

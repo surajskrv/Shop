@@ -66,6 +66,10 @@ def generate_quote(payload: QuoteRequest):
             payload_dict = payload.model_dump()  # Pydantic v2
         except AttributeError:
             payload_dict = payload.dict()  # Pydantic v1 fallback
+        # Only allow iron and steel for now
+        allowed_materials = {"iron", "steel"}
+        if str(payload_dict.get("material", "")).lower() not in allowed_materials:
+            raise HTTPException(status_code=400, detail="Invalid material. Allowed: iron, steel")
         features_df = pd.DataFrame([payload_dict])
         prediction = model.predict(features_df)
         estimated_price = float(prediction[0])

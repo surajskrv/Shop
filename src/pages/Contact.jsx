@@ -175,7 +175,27 @@ export default function Contact() {
           <p className="mb-2"><span className="font-bold text-industrial">Phone:</span> 555-123-4567</p>
           <p className="mb-2"><span className="font-bold text-industrial">Email:</span> info@metalworks.com</p>
           <p className="mb-6"><span className="font-bold text-industrial">Address:</span> 123 Industrial Ave, City, State</p>
-          <div className="w-full h-64 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500 font-semibold">[Google Map Placeholder]</div>
+          <div className="w-full h-64 rounded-lg overflow-hidden shadow">
+            <iframe
+              title="Patna, India Location"
+              src="https://www.google.com/maps?q=Patna%2C%20India&output=embed"
+              width="100%"
+              height="100%"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="w-full h-full border-0"
+            />
+          </div>
+          <div className="mt-2">
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=Patna%2C%20India"
+              target="_blank"
+              rel="noreferrer"
+              className="text-industrial hover:underline"
+            >
+              Open in Google Maps
+            </a>
+          </div>
         </div>
       </section>
       <Footer />

@@ -10,8 +10,7 @@ export default function Header() {
   return (
     <header className="bg-steel text-white sticky top-0 z-50 backdrop-blur bg-steel/80 shadow-lg">
       <div className="flex items-center justify-between px-8 py-5">
-        <div className="flex items-center gap-4">
-          <img src="/logo.png" alt="Metal Shop Logo" className="h-10" />
+        <div className="flex items-center gap-2">
           <span className="font-bold text-2xl tracking-wide">MetalWorks</span>
         </div>
 
