@@ -1,62 +1,156 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { FaIndustry, FaCog, FaWrench, FaHammer } from "react-icons/fa";
 
 const services = [
   {
-    icon: (
-      <svg className="w-10 h-10 text-industrial" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 7h18M3 12h18M3 17h18" /></svg>
-    ),
+    icon: <FaIndustry className="w-12 h-12" />,
     title: "Laser Cutting",
-    desc: "Precision laser cutting for all metals."
+    desc: "Precision laser cutting for all metals with tight tolerances and clean edges.",
+    features: ["High accuracy", "Clean cuts", "Fast turnaround"]
   },
   {
-    icon: (
-      <svg className="w-10 h-10 text-industrial" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6l4 2" /></svg>
-    ),
+    icon: <FaCog className="w-12 h-12" />,
     title: "CNC Machining",
-    desc: "High-accuracy CNC for custom parts."
+    desc: "High-accuracy CNC machining for custom parts and complex geometries.",
+    features: ["Complex shapes", "Tight tolerances", "Quality finish"]
   },
   {
-    icon: (
-      <svg className="w-10 h-10 text-industrial" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-    ),
+    icon: <FaWrench className="w-12 h-12" />,
     title: "Welding",
-    desc: "Expert MIG, TIG, and spot welding."
+    desc: "Expert MIG, TIG, and spot welding for strong, durable connections.",
+    features: ["Multiple techniques", "Strong joints", "Professional finish"]
   },
   {
-    icon: (
-      <svg className="w-10 h-10 text-industrial" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" /><path strokeLinecap="round" strokeLinejoin="round" d="M9 9h6v6H9z" /></svg>
-    ),
+    icon: <FaHammer className="w-12 h-12" />,
     title: "Fabrication",
-    desc: "Complete metal fabrication solutions."
+    desc: "Complete metal fabrication solutions from concept to finished product.",
+    features: ["End-to-end service", "Custom designs", "Quality assurance"]
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut"
+    }
+  }
+};
+
 export default function ServicesOverview() {
   return (
-    <section className="py-20 bg-gradient-to-r from-industrial via-steel to-gray-100">
+    <section className="py-20 bg-gradient-to-br from-light-gray via-white to-gray-50">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8 }}
+        className="max-w-6xl mx-auto px-4"
       >
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-4xl font-extrabold text-steel mb-4 text-center drop-shadow">Our Metal Fabrication Services</h2>
-          <p className="text-lg text-gray-700 mb-12 text-center max-w-2xl mx-auto">From laser cutting to full fabrication, we offer a complete range of services for industrial and commercial clients. Our advanced equipment and skilled team ensure top quality and fast turnaround.</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-            {services.map((service) => (
-              <div key={service.title} className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center hover:scale-105 hover:shadow-2xl transition-transform duration-200 border border-gray-100">
-                <div className="mb-4">{service.icon}</div>
-                <h3 className="font-bold text-xl mb-2 text-industrial">{service.title}</h3>
-                <p className="text-center text-gray-600">{service.desc}</p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-extrabold text-steel mb-6 drop-shadow">
+            Our Metal Fabrication Services
+          </h2>
+          <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            From laser cutting to full fabrication, we offer a complete range of services for industrial and commercial clients. 
+            Our advanced equipment and skilled team ensure top quality and fast turnaround.
+          </p>
+        </motion.div>
+
+        <motion.div 
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
+          {services.map((service, index) => (
+            <motion.div
+              key={service.title}
+              variants={itemVariants}
+              whileHover={{ 
+                scale: 1.05,
+                transition: { duration: 0.2 }
+              }}
+              className="group bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center text-center hover:shadow-2xl transition-all duration-300 border border-gray-100 relative overflow-hidden"
+            >
+              {/* Background gradient on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-industrial/5 to-safety/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
+              <motion.div 
+                className="mb-6 text-industrial group-hover:text-safety transition-colors duration-300 relative z-10"
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.6 }}
+              >
+                {service.icon}
+              </motion.div>
+              
+              <div className="relative z-10">
+                <h3 className="font-bold text-xl mb-3 text-steel group-hover:text-industrial transition-colors duration-300">
+                  {service.title}
+                </h3>
+                <p className="text-gray-600 mb-4 leading-relaxed">
+                  {service.desc}
+                </p>
+                
+                <div className="space-y-2">
+                  {service.features.map((feature, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 * idx }}
+                      className="flex items-center gap-2 text-sm text-gray-500"
+                    >
+                      <div className="w-1.5 h-1.5 bg-safety rounded-full" />
+                      {feature}
+                    </motion.div>
+                  ))}
+                </div>
               </div>
-            ))}
-          </div>
-          <div className="text-center mt-12">
-            <a href="/services" className="text-safety font-semibold hover:underline text-lg">View All Services</a>
-          </div>
-        </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        <motion.div 
+          className="text-center mt-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          <motion.a 
+            href="/services" 
+            className="inline-flex items-center gap-3 bg-industrial text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:bg-blue-900"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <span>View All Services</span>
+            <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </motion.a>
+        </motion.div>
       </motion.div>
     </section>
   );

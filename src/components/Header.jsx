@@ -1,143 +1,224 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaArrowRight, FaComments } from "react-icons/fa";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const closeMenu = () => setMenuOpen(false);
 
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
-    <header className="bg-steel text-white sticky top-0 z-50 backdrop-blur bg-steel/80 shadow-lg">
-      <div className="flex items-center justify-between px-8 py-5">
-        <div className="flex items-center gap-2">
-          <span className="font-bold text-2xl tracking-wide">MetalWorks</span>
+    <>
+      <motion.header
+        className={`text-white sticky top-0 z-40 backdrop-blur shadow-lg transition-all duration-200 ${
+          scrolled ? "bg-steel/95 shadow-xl" : "bg-steel/70"
+        }`}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      >
+        <div className="flex items-center justify-between px-8 py-5">
+          <motion.div
+            className="flex items-center gap-2"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
+            <span className="font-bold text-2xl tracking-wide bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
+              MetalWorks
+            </span>
+          </motion.div>
+
+          {/* Desktop navigation */}
+          <nav className="hidden md:flex gap-8 text-lg font-medium">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `hover:text-safety hover:underline underline-offset-4 transition-all duration-150 ${isActive ? "text-safety font-semibold" : "hover:scale-105"}`
+              }
+              end
+            >
+              Home
+            </NavLink>
+            <NavLink
+              to="/services"
+              className={({ isActive }) =>
+                `hover:text-safety hover:underline underline-offset-4 transition-all duration-150 ${isActive ? "text-safety font-semibold" : "hover:scale-105"}`
+              }
+            >
+              Services
+            </NavLink>
+            <NavLink
+              to="/gallery"
+              className={({ isActive }) =>
+                `hover:text-safety hover:underline underline-offset-4 transition-all duration-150 ${isActive ? "text-safety font-semibold" : "hover:scale-105"}`
+              }
+            >
+              Gallery
+            </NavLink>
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                `hover:text-safety hover:underline underline-offset-4 transition-all duration-150 ${isActive ? "text-safety font-semibold" : "hover:scale-105"}`
+              }
+            >
+              About Us
+            </NavLink>
+            <NavLink
+              to="/contact"
+              className={({ isActive }) =>
+                `hover:text-safety hover:underline underline-offset-4 transition-all duration-150 ${isActive ? "text-safety font-semibold" : "hover:scale-105"}`
+              }
+            >
+              Contact
+            </NavLink>
+          </nav>
+
+          {/* Desktop CTA */}
+          <div className="hidden md:flex items-center gap-4">
+            <span className="font-semibold text-white/90">555-123-4567</span>
+            <NavLink
+              to="/quote"
+              className={({ isActive }) =>
+                `bg-safety text-white px-5 py-2 rounded-lg transition-all duration-150 font-semibold shadow hover:bg-orange-600 hover:scale-105 ${isActive ? "ring-2 ring-white/60" : ""}`
+              }
+            >
+              Get a Quote
+            </NavLink>
+          </div>
+
+          {/* Mobile hamburger */}
+          <motion.button
+            className="md:hidden inline-flex items-center justify-center p-2 rounded hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
+            aria-label="Toggle navigation menu"
+            aria-expanded={menuOpen}
+            onClick={toggleMenu}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {/* Hamburger / Close icon */}
+            {!menuOpen ? (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            )}
+          </motion.button>
         </div>
+      </motion.header>
 
-        {/* Desktop navigation */}
-        <nav className="hidden md:flex gap-8 text-lg">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `hover:text-safety hover:underline underline-offset-4 transition ${isActive ? "text-safety" : ""}`
-            }
-            end
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="/services"
-            className={({ isActive }) =>
-              `hover:text-safety hover:underline underline-offset-4 transition ${isActive ? "text-safety" : ""}`
-            }
-          >
-            Services
-          </NavLink>
-          <NavLink
-            to="/gallery"
-            className={({ isActive }) =>
-              `hover:text-safety hover:underline underline-offset-4 transition ${isActive ? "text-safety" : ""}`
-            }
-          >
-            Gallery
-          </NavLink>
-          <NavLink
-            to="/about"
-            className={({ isActive }) =>
-              `hover:text-safety hover:underline underline-offset-4 transition ${isActive ? "text-safety" : ""}`
-            }
-          >
-            About Us
-          </NavLink>
-          <NavLink
-            to="/contact"
-            className={({ isActive }) =>
-              `hover:text-safety hover:underline underline-offset-4 transition ${isActive ? "text-safety" : ""}`
-            }
-          >
-            Contact
-          </NavLink>
-        </nav>
-
-        {/* Desktop CTA */}
-        <div className="hidden md:flex items-center gap-4">
-          <span className="font-semibold">555-123-4567</span>
-          <NavLink
-            to="/quote"
-            className={({ isActive }) =>
-              `bg-safety text-white px-5 py-2 rounded-lg transition font-semibold shadow hover:bg-orange-600 ${isActive ? "ring-2 ring-white/60" : ""}`
-            }
-          >
-            Get a Quote
-          </NavLink>
-        </div>
-
-        {/* Mobile hamburger */}
-        <button
-          className="md:hidden inline-flex items-center justify-center p-2 rounded hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
-          aria-label="Toggle navigation menu"
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((v) => !v)}
-        >
-          {/* Hamburger / Close icon */}
-          {!menuOpen ? (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          )}
-        </button>
-      </div>
-
-      {/* Mobile full-screen overlay menu */}
+      {/* Mobile dropdown menu - Outside header to avoid z-index issues */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 md:hidden bg-black/40 backdrop-blur-sm"
+            transition={{ duration: 0.15 }}
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm md:hidden"
             onClick={closeMenu}
           >
-            <motion.nav
+            <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 260, damping: 24 }}
-              className="absolute right-0 top-0 h-full w-4/5 max-w-sm bg-steel/95 text-white shadow-2xl"
+              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              className="absolute right-0 top-0 h-full w-4/5 max-w-sm bg-gradient-to-b from-steel to-steel/90 text-white shadow-2xl overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
-                <span className="font-bold text-xl tracking-wide">Menu</span>
-                <button
+              {/* Header */}
+              <div className="flex items-center justify-between px-6 py-5 border-b border-white/20">
+                <span className="font-bold text-xl tracking-wide bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">Menu</span>
+                <motion.button
                   className="inline-flex items-center justify-center p-2 rounded hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
                   aria-label="Close menu"
                   onClick={closeMenu}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
-                </button>
+                </motion.button>
               </div>
-              <div className="px-8 py-6 flex flex-col gap-5 text-lg">
-                <NavLink to="/" end onClick={closeMenu} className={({ isActive }) => `transition ${isActive ? "text-safety" : "hover:text-safety"}`}>Home</NavLink>
-                <NavLink to="/services" onClick={closeMenu} className={({ isActive }) => `transition ${isActive ? "text-safety" : "hover:text-safety"}`}>Services</NavLink>
-                <NavLink to="/gallery" onClick={closeMenu} className={({ isActive }) => `transition ${isActive ? "text-safety" : "hover:text-safety"}`}>Gallery</NavLink>
-                <NavLink to="/about" onClick={closeMenu} className={({ isActive }) => `transition ${isActive ? "text-safety" : "hover:text-safety"}`}>About Us</NavLink>
-                <NavLink to="/contact" onClick={closeMenu} className={({ isActive }) => `transition ${isActive ? "text-safety" : "hover:text-safety"}`}>Contact</NavLink>
-                <div className="pt-4 mt-2 border-t border-white/10 flex items-center justify-between">
-                  <span className="font-semibold">555-123-4567</span>
-                  <NavLink to="/quote" onClick={closeMenu} className={({ isActive }) => `bg-safety text-white px-4 py-2 rounded-lg transition font-semibold shadow hover:bg-orange-600 ${isActive ? "ring-2 ring-white/60" : ""}`}>Get a Quote</NavLink>
+
+              {/* Navigation Links */}
+              <div className="px-6 py-6">
+                <div className="space-y-4">
+                  <NavLink 
+                    to="/" 
+                    end 
+                    onClick={closeMenu} 
+                    className={({ isActive }) => `block text-lg font-medium transition-colors duration-150 ${isActive ? "text-safety" : "text-white hover:text-safety"}`}
+                  >
+                    Home
+                  </NavLink>
+                  
+                  {/* Get Instant Quote Button */}
+                  <NavLink 
+                    to="/quote" 
+                    onClick={closeMenu} 
+                    className={({ isActive }) => `block bg-safety text-white px-6 py-3 rounded-lg font-semibold text-lg shadow-lg hover:bg-orange-600 transition-all duration-150 flex items-center justify-between ${isActive ? "ring-2 ring-white/60" : ""}`}
+                  >
+                    <span>Get Instant Quote</span>
+                    <FaArrowRight className="w-5 h-5" />
+                  </NavLink>
+                  
+                  <NavLink 
+                    to="/services" 
+                    onClick={closeMenu} 
+                    className={({ isActive }) => `block text-lg font-medium transition-colors duration-150 ${isActive ? "text-safety" : "text-white hover:text-safety"}`}
+                  >
+                    Services
+                  </NavLink>
+                  
+                  <NavLink 
+                    to="/gallery" 
+                    onClick={closeMenu} 
+                    className={({ isActive }) => `block text-lg font-medium transition-colors duration-150 ${isActive ? "text-safety" : "text-white hover:text-safety"}`}
+                  >
+                    Gallery
+                  </NavLink>
+                  
+                  <NavLink 
+                    to="/about" 
+                    onClick={closeMenu} 
+                    className={({ isActive }) => `block text-lg font-medium transition-colors duration-150 ${isActive ? "text-safety" : "text-white hover:text-safety"}`}
+                  >
+                    About Us
+                  </NavLink>
+                  
+                  <NavLink 
+                    to="/contact" 
+                    onClick={closeMenu} 
+                    className={({ isActive }) => `block text-lg font-medium transition-colors duration-150 flex items-center gap-2 ${isActive ? "text-safety" : "text-white hover:text-safety"}`}
+                  >
+                    <FaComments className="w-4 h-4" />
+                    Contact
+                  </NavLink>
                 </div>
               </div>
-            </motion.nav>
+
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 } 
