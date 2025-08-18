@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { InView } from "react-intersection-observer";
 
 const projects = [
   { img: "/project1.jpg", title: "Industrial Staircase", details: "Steel, 2023" },
@@ -22,16 +23,24 @@ export default function PortfolioPreview() {
           <p className="text-lg text-gray-700 mb-12 text-center max-w-2xl mx-auto">A sample of our recent work, showcasing our range and quality. Click to see more details or view the full gallery.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
             {projects.map((project) => (
-              <div key={project.title} className="relative group rounded-2xl overflow-hidden shadow-lg border border-gray-200 bg-white flex flex-col items-stretch hover:shadow-2xl hover:scale-105 transition-transform duration-200">
-                <img src={project.img} alt={project.title} className="w-full h-48 object-cover" />
-                <div className="flex-1 flex flex-col justify-between p-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-safety mb-1">{project.title}</h3>
-                    <p className="text-gray-600 mb-2">{project.details}</p>
+              <InView key={project.title} triggerOnce rootMargin="200px">
+                {({ inView, ref }) => (
+                  <div ref={ref} className="relative group rounded-2xl overflow-hidden shadow-lg border border-gray-200 bg-white flex flex-col items-stretch hover:shadow-2xl hover:scale-105 transition-transform duration-200">
+                    {inView ? (
+                      <img src={project.img} alt={project.title} className="w-full h-48 object-cover" />
+                    ) : (
+                      <div className="w-full h-48 bg-gray-200 animate-pulse" />
+                    )}
+                    <div className="flex-1 flex flex-col justify-between p-4">
+                      <div>
+                        <h3 className="text-xl font-bold text-safety mb-1">{project.title}</h3>
+                        <p className="text-gray-600 mb-2">{project.details}</p>
+                      </div>
+                      <a href="/gallery" className="mt-2 inline-block bg-industrial text-white px-4 py-2 rounded hover:bg-blue-900 transition text-sm font-semibold opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 duration-200">View Details</a>
+                    </div>
                   </div>
-                  <a href="/gallery" className="mt-2 inline-block bg-industrial text-white px-4 py-2 rounded hover:bg-blue-900 transition text-sm font-semibold opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 duration-200">View Details</a>
-                </div>
-              </div>
+                )}
+              </InView>
             ))}
           </div>
           <div className="text-center mt-12">

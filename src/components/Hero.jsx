@@ -33,7 +33,7 @@ export default function Hero() {
             <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553 2.276A2 2 0 0121 14.09V17a2 2 0 01-2 2H5a2 2 0 01-2-2v-2.91a2 2 0 01.447-1.314L8 10m7-6v6m0 0l-3 3m3-3l3 3" /></svg>
             View Our Work
           </a>
-          <a href="/contact" className="flex items-center gap-2 bg-safety px-7 py-3 rounded-lg text-white font-semibold text-lg shadow hover:scale-105 hover:bg-orange-600 transition-transform duration-200">
+          <a href="/quote" className="flex items-center gap-2 bg-safety px-7 py-3 rounded-lg text-white font-semibold text-lg shadow hover:scale-105 hover:bg-orange-600 transition-transform duration-200">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 14h.01M16 10h.01M21 16V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2h14a2 2 0 002-2z" /></svg>
             Request a Quote
           </a>

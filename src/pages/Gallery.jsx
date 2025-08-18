@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import { InView } from "react-intersection-observer";
+import ImageModal from "../components/ImageModal";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
@@ -12,6 +15,7 @@ const images = [
 
 export default function Gallery() {
   const [filter, setFilter] = useState("All");
+  const [selected, setSelected] = useState(null);
   const filtered = filter === "All" ? images : images.filter(img => img.category === filter);
 
   return (
@@ -34,16 +38,39 @@ export default function Gallery() {
           ))}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
-          {filtered.map(img => (
-            <div key={img.title} className="relative group rounded-2xl overflow-hidden shadow-lg border border-gray-200 bg-white hover:shadow-2xl hover:scale-105 transition-transform duration-200">
-              <img src={img.src} alt={img.title} className="w-full h-48 object-cover" />
-              <div className="absolute inset-0 bg-steel bg-opacity-70 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <h3 className="text-xl font-bold text-safety mb-2">{img.title}</h3>
-                <span className="text-white">{img.category}</span>
-              </div>
-            </div>
+          {filtered.map((img) => (
+            <InView key={img.title} triggerOnce rootMargin="200px">
+              {({ inView, ref }) => (
+                <button
+                  ref={ref}
+                  type="button"
+                  onClick={() => setSelected(img)}
+                  className="relative group rounded-2xl overflow-hidden shadow-lg border border-gray-200 bg-white hover:shadow-2xl hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-safety"
+                >
+                  {inView ? (
+                    <img src={img.src} alt={img.title} className="w-full h-48 object-cover" />
+                  ) : (
+                    <div className="w-full h-48 bg-gray-200 animate-pulse" />
+                  )}
+                  <div className="absolute inset-0 bg-steel bg-opacity-70 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <h3 className="text-xl font-bold text-safety mb-2">{img.title}</h3>
+                    <span className="text-white">{img.category}</span>
+                  </div>
+                </button>
+              )}
+            </InView>
           ))}
         </div>
+
+        <AnimatePresence>
+          {selected && (
+            <ImageModal
+              imageUrl={selected.src}
+              title={selected.title}
+              onClose={() => setSelected(null)}
+            />
+          )}
+        </AnimatePresence>
       </section>
       <Footer />
     </>
