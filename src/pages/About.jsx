@@ -27,32 +27,6 @@ const values = [
   }
 ];
 
-const team = [
-  {
-    name: "John Smith",
-    role: "Founder & CEO",
-    experience: "25+ years",
-    specialty: "Strategic Planning"
-  },
-  {
-    name: "Sarah Johnson",
-    role: "Operations Manager",
-    experience: "15+ years",
-    specialty: "Quality Control"
-  },
-  {
-    name: "Mike Chen",
-    role: "Lead Engineer",
-    experience: "12+ years",
-    specialty: "Technical Design"
-  },
-  {
-    name: "Lisa Rodriguez",
-    role: "Production Supervisor",
-    experience: "10+ years",
-    specialty: "Manufacturing"
-  }
-];
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -237,67 +211,7 @@ export default function About() {
           </div>
         </motion.div>
 
-        {/* Team Section */}
-        <motion.div 
-          className="max-w-6xl mx-auto px-4 py-16"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl md:text-4xl font-extrabold text-steel mb-6">
-              Our Team
-            </h2>
-            <p className="text-xl text-gray-700 max-w-2xl mx-auto">
-              Meet the experienced professionals who make MetalWorks a trusted partner in metal fabrication.
-            </p>
-          </motion.div>
 
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-          >
-            {team.map((member, index) => (
-              <motion.div
-                key={member.name}
-                variants={itemVariants}
-                whileHover={{ 
-                  scale: 1.05,
-                  transition: { duration: 0.2 }
-                }}
-                className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-2xl transition-all duration-300 border border-gray-100"
-              >
-                <div className="w-20 h-20 bg-gradient-to-br from-industrial to-steel rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">
-                    {member.name.split(' ').map(n => n[0]).join('')}
-                  </span>
-                </div>
-                <h3 className="text-xl font-bold text-steel mb-2">
-                  {member.name}
-                </h3>
-                <p className="text-safety font-semibold mb-2">
-                  {member.role}
-                </p>
-                <p className="text-gray-600 text-sm mb-2">
-                  {member.experience} experience
-                </p>
-                <p className="text-gray-500 text-sm">
-                  {member.specialty}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
 
         {/* CTA Section */}
         <motion.div 

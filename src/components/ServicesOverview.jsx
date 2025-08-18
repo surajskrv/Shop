@@ -4,16 +4,10 @@ import { FaIndustry, FaCog, FaWrench, FaHammer } from "react-icons/fa";
 
 const services = [
   {
-    icon: <FaIndustry className="w-12 h-12" />,
-    title: "Laser Cutting",
-    desc: "Precision laser cutting for all metals with tight tolerances and clean edges.",
-    features: ["High accuracy", "Clean cuts", "Fast turnaround"]
-  },
-  {
-    icon: <FaCog className="w-12 h-12" />,
-    title: "CNC Machining",
-    desc: "High-accuracy CNC machining for custom parts and complex geometries.",
-    features: ["Complex shapes", "Tight tolerances", "Quality finish"]
+    icon: <FaHammer className="w-12 h-12" />,
+    title: "Fabrication",
+    desc: "Complete metal fabrication solutions from concept to finished product.",
+    features: ["End-to-end service", "Custom designs", "Quality assurance"]
   },
   {
     icon: <FaWrench className="w-12 h-12" />,
@@ -22,10 +16,10 @@ const services = [
     features: ["Multiple techniques", "Strong joints", "Professional finish"]
   },
   {
-    icon: <FaHammer className="w-12 h-12" />,
-    title: "Fabrication",
-    desc: "Complete metal fabrication solutions from concept to finished product.",
-    features: ["End-to-end service", "Custom designs", "Quality assurance"]
+    icon: <FaIndustry className="w-12 h-12" />,
+    title: "Laser Cutting",
+    desc: "Precision laser cutting for all metals with tight tolerances and clean edges.",
+    features: ["High accuracy", "Clean cuts", "Fast turnaround"]
   },
 ];
 
@@ -130,26 +124,6 @@ export default function ServicesOverview() {
               </div>
             </motion.div>
           ))}
-        </motion.div>
-
-        <motion.div 
-          className="text-center mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <motion.a 
-            href="/services" 
-            className="inline-flex items-center gap-3 bg-industrial text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:bg-blue-900"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span>View All Services</span>
-            <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </motion.a>
         </motion.div>
       </motion.div>
     </section>

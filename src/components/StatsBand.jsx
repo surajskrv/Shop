@@ -11,18 +11,6 @@ export default function StatsBand() {
       color: "from-blue-500 to-blue-600"
     },
     { 
-      icon: <FaClock className="h-8 w-8" />, 
-      label: "Average Lead Time", 
-      value: "3-7 days",
-      color: "from-green-500 to-green-600"
-    },
-    { 
-      icon: <FaStar className="h-8 w-8" />, 
-      label: "Customer Rating", 
-      value: "4.9/5",
-      color: "from-yellow-500 to-yellow-600"
-    },
-    { 
       icon: <FaCheckCircle className="h-8 w-8" />, 
       label: "Projects Delivered", 
       value: "2,000+",
