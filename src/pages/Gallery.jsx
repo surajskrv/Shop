@@ -7,67 +7,69 @@ import Footer from "../components/Footer";
 import ProjectModal from "../components/ProjectModal";
 
 const categories = ["All", "Industrial", "Architectural", "Custom Art"];
+const materials = ["All", "Steel", "Iron", "Stainless Steel", "Aluminum"];
+
 const images = [
-  { 
-    src: "/project1.jpg", 
-    title: "Industrial Staircase", 
-    category: "Industrial", 
+  {
+    src: "/project1.jpg",
+    title: "Industrial Staircase",
+    category: "Industrial",
     description: "A robust industrial staircase designed for heavy-duty use in a manufacturing plant. Features non-slip treads and a durable steel frame that can withstand years of heavy traffic and industrial wear.",
     year: "2023",
     materials: "Steel, Powder Coated"
   },
-  { 
-    src: "/project2.jpg", 
-    title: "Custom Railings", 
-    category: "Architectural", 
+  {
+    src: "/project2.jpg",
+    title: "Custom Railings",
+    category: "Architectural",
     description: "Elegant custom railings for a modern residential building, combining safety with sophisticated design. Made from polished stainless steel with precision-welded joints and smooth finishes.",
     year: "2022",
     materials: "Stainless Steel"
   },
-  { 
-    src: "/project3.jpg", 
-    title: "Machine Frame", 
-    category: "Industrial", 
+  {
+    src: "/project3.jpg",
+    title: "Machine Frame",
+    category: "Industrial",
     description: "Precision-engineered machine frame providing a stable and rigid base for high-speed machinery. Constructed from reinforced steel alloys with exacting tolerances for optimal performance.",
     year: "2023",
     materials: "Reinforced Steel"
   },
-  { 
-    src: "/project4.jpg", 
-    title: "Architectural Art", 
-    category: "Custom Art", 
+  {
+    src: "/project4.jpg",
+    title: "Architectural Art",
+    category: "Custom Art",
     description: "A unique architectural art piece commissioned for a public space, blending abstract forms with industrial materials. Features intricate laser-cut details and weathered steel finishes.",
     year: "2024",
     materials: "Mixed Metals"
   },
-  { 
-    src: "/project5.jpg", 
-    title: "Factory Equipment", 
-    category: "Industrial", 
+  {
+    src: "/project5.jpg",
+    title: "Factory Equipment",
+    category: "Industrial",
     description: "Heavy-duty factory equipment components designed for continuous operation in demanding industrial environments. Built with durability and efficiency in mind.",
     year: "2023",
     materials: "Industrial Steel"
   },
-  { 
-    src: "/project6.jpg", 
-    title: "Modern Facade", 
-    category: "Architectural", 
+  {
+    src: "/project6.jpg",
+    title: "Modern Facade",
+    category: "Architectural",
     description: "Contemporary building facade featuring custom metal panels and structural elements. Combines aesthetic appeal with functional design for modern architecture.",
     year: "2024",
     materials: "Aluminum, Steel"
   },
-  { 
-    src: "/project7.jpg", 
-    title: "Sculptural Installation", 
-    category: "Custom Art", 
+  {
+    src: "/project7.jpg",
+    title: "Sculptural Installation",
+    category: "Custom Art",
     description: "Large-scale sculptural installation showcasing the artistic potential of metal fabrication. Features flowing forms and dynamic shapes that create visual interest from all angles.",
     year: "2024",
     materials: "Stainless Steel, Bronze"
   },
-  { 
-    src: "/project8.jpg", 
-    title: "Safety Barriers", 
-    category: "Industrial", 
+  {
+    src: "/project8.jpg",
+    title: "Safety Barriers",
+    category: "Industrial",
     description: "Industrial safety barriers and guardrails designed for maximum protection and durability. Engineered to meet strict safety standards while maintaining clean aesthetics.",
     year: "2023",
     materials: "Galvanized Steel"
@@ -104,9 +106,15 @@ const itemVariants = {
 };
 
 export default function Gallery() {
-  const [filter, setFilter] = useState("All");
+  const [categoryFilter, setCategoryFilter] = useState("All");
+  const [materialFilter, setMaterialFilter] = useState("All");
   const [selected, setSelected] = useState(null);
-  const filtered = filter === "All" ? images : images.filter(img => img.category === filter);
+
+  const filtered = images.filter(img => {
+    const categoryMatch = categoryFilter === "All" || img.category === categoryFilter;
+    const materialMatch = materialFilter === "All" || img.materials.includes(materialFilter);
+    return categoryMatch && materialMatch;
+  });
 
   return (
     <>
@@ -120,7 +128,7 @@ export default function Gallery() {
           className="py-20 px-4 text-center"
         >
           <div className="max-w-4xl mx-auto">
-            <motion.h1 
+            <motion.h1
               className="text-5xl md:text-6xl font-extrabold text-steel mb-6 drop-shadow-2xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -128,32 +136,32 @@ export default function Gallery() {
             >
               Our Gallery
             </motion.h1>
-            <motion.p 
+            <motion.p
               className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              Explore our portfolio of completed projects, showcasing our expertise 
+              Explore our portfolio of completed projects, showcasing our expertise
               in metal fabrication across various industries and applications.
             </motion.p>
           </div>
         </motion.div>
 
         {/* Filter Section */}
-        <motion.div 
+        <motion.div
           className="max-w-6xl mx-auto px-4 pb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4 mb-4">
             {categories.map((category) => (
               <motion.button
                 key={category}
-                onClick={() => setFilter(category)}
+                onClick={() => setCategoryFilter(category)}
                 className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 ${
-                  filter === category
+                  categoryFilter === category
                     ? "bg-safety text-white shadow-lg"
                     : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200"
                 }`}
@@ -165,18 +173,36 @@ export default function Gallery() {
               </motion.button>
             ))}
           </div>
+          <div className="flex flex-wrap justify-center gap-4">
+            {materials.map((material) => (
+              <motion.button
+                key={material}
+                onClick={() => setMaterialFilter(material)}
+                className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 ${
+                  materialFilter === material
+                    ? "bg-industrial text-white shadow-lg"
+                    : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200"
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <FaTag className="w-4 h-4" />
+                {material}
+              </motion.button>
+            ))}
+          </div>
         </motion.div>
 
         {/* Gallery Grid */}
-        <motion.div 
+        <motion.div
           className="max-w-7xl mx-auto px-4 pb-20"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           <AnimatePresence mode="wait">
-            <motion.div 
-              key={filter}
+            <motion.div
+              key={categoryFilter + materialFilter}
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
               variants={containerVariants}
               initial="hidden"
@@ -195,9 +221,9 @@ export default function Gallery() {
                       {({ inView, ref }) => (
                         <div ref={ref} className="h-64 bg-gray-200">
                           {inView ? (
-                            <motion.img 
-                              src={img.src} 
-                              alt={img.title} 
+                            <motion.img
+                              src={img.src}
+                              alt={img.title}
                               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
@@ -209,9 +235,9 @@ export default function Gallery() {
                         </div>
                       )}
                     </InView>
-                    
+
                     {/* Overlay */}
-                    <motion.div 
+                    <motion.div
                       className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       initial={{ opacity: 0 }}
                       whileHover={{ opacity: 1 }}
@@ -240,7 +266,7 @@ export default function Gallery() {
                     <p className="text-gray-600 text-sm mb-4 line-clamp-2">
                       {img.description}
                     </p>
-                    
+
                     <motion.button
                       onClick={() => setSelected(img)}
                       className="inline-flex items-center gap-2 bg-industrial text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition-all duration-300 text-sm font-semibold w-full justify-center"
@@ -258,7 +284,7 @@ export default function Gallery() {
         </motion.div>
 
         {/* CTA Section */}
-        <motion.div 
+        <motion.div
           className="bg-gradient-to-r from-steel to-industrial py-16 px-4"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -266,7 +292,7 @@ export default function Gallery() {
           transition={{ duration: 0.8 }}
         >
           <div className="max-w-4xl mx-auto text-center text-white">
-            <motion.h2 
+            <motion.h2
               className="text-3xl md:text-4xl font-extrabold mb-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -275,7 +301,7 @@ export default function Gallery() {
             >
               Inspired by Our Work?
             </motion.h2>
-            <motion.p 
+            <motion.p
               className="text-xl mb-8 text-white/90"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -329,4 +355,4 @@ export default function Gallery() {
       <Footer />
     </>
   );
-} 
+}

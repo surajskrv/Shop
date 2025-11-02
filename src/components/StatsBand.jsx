@@ -4,15 +4,15 @@ import { FaIndustry, FaClock, FaStar, FaCheckCircle } from "react-icons/fa";
 
 export default function StatsBand() {
   const items = [
-    { 
-      icon: <FaIndustry className="h-8 w-8" />, 
-      label: "Years in Business", 
+    {
+      icon: <FaIndustry className="h-8 w-8" />,
+      label: "Years in Business",
       value: "25+",
       color: "from-blue-500 to-blue-600"
     },
-    { 
-      icon: <FaCheckCircle className="h-8 w-8" />, 
-      label: "Projects Delivered", 
+    {
+      icon: <FaCheckCircle className="h-8 w-8" />,
+      label: "Projects Delivered",
       value: "2,000+",
       color: "from-purple-500 to-purple-600"
     },
@@ -42,7 +42,7 @@ export default function StatsBand() {
 
   return (
     <section className="bg-gradient-to-r from-light-gray via-white to-gray-50 py-16 animate-fadeIn">
-      <motion.div 
+      <motion.div
         className="max-w-6xl mx-auto px-4"
         variants={containerVariants}
         initial="hidden"
@@ -69,23 +69,23 @@ export default function StatsBand() {
             <motion.div
               key={item.label}
               variants={itemVariants}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.05,
                 transition: { duration: 0.2 }
               }}
               className="group bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-2xl transition-all duration-300 border border-gray-100 relative overflow-hidden"
             >
               {/* Gradient background on hover */}
-              <motion.div 
+              <motion.div
                 className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
                 initial={{ scale: 0 }}
                 whileHover={{ scale: 1 }}
                 transition={{ duration: 0.3 }}
               />
-              
-              <motion.div 
+
+              <motion.div
                 className="mb-4 text-industrial group-hover:text-safety transition-colors duration-300 relative z-10"
-                whileHover={{ 
+                whileHover={{
                   rotate: 360,
                   scale: 1.1
                 }}
@@ -93,9 +93,9 @@ export default function StatsBand() {
               >
                 {item.icon}
               </motion.div>
-              
+
               <div className="relative z-10">
-                <motion.div 
+                <motion.div
                   className="text-3xl font-extrabold text-steel leading-tight mb-2 group-hover:text-industrial transition-colors duration-300"
                   initial={{ scale: 0.8 }}
                   whileInView={{ scale: 1 }}
@@ -114,5 +114,3 @@ export default function StatsBand() {
     </section>
   );
 }
-
-

@@ -1,91 +1,72 @@
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
-import json
+
 import joblib
 import pandas as pd
-from pydantic import BaseModel
+from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder
 
 
-app = FastAPI(title="MetalWorks API")
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to the MetalWorks API"}
-
-
-@app.get("/api/projects")
-def get_projects():
-    projects_path = Path(__file__).resolve().parent / "projects.json"
-    if not projects_path.exists():
-        raise HTTPException(status_code=404, detail="projects.json not found")
-    try:
-        with projects_path.open("r", encoding="utf-8") as f:
-            data = json.load(f)
-    except json.JSONDecodeError as exc:
-        raise HTTPException(status_code=500, detail="Invalid JSON in projects.json") from exc
-    return data
+def build_sample_dataset() -> pd.DataFrame:
+    """Create a small sample dataset representing past jobs."""
+    data = [
+        {"width_cm": 50, "height_cm": 40, "material": "steel", "complexity": 3, "price": 120.0},
+        {"width_cm": 80, "height_cm": 60, "material": "iron", "complexity": 5, "price": 180.0},
+        {"width_cm": 30, "height_cm": 30, "material": "steel", "complexity": 2, "price": 90.0},
+        {"width_cm": 100, "height_cm": 80, "material": "iron", "complexity": 7, "price": 320.0},
+        {"width_cm": 120, "height_cm": 90, "material": "steel", "complexity": 8, "price": 420.0},
+        {"width_cm": 60, "height_cm": 50, "material": "iron", "complexity": 4, "price": 150.0},
+        {"width_cm": 45, "height_cm": 35, "material": "iron", "complexity": 3, "price": 110.0},
+        {"width_cm": 150, "height_cm": 100, "material": "steel", "complexity": 9, "price": 600.0},
+        {"width_cm": 70, "height_cm": 55, "material": "iron", "complexity": 6, "price": 210.0},
+        {"width_cm": 40, "height_cm": 40, "material": "steel", "complexity": 2, "price": 95.0},
+        {"width_cm": 90, "height_cm": 70, "material": "steel", "complexity": 8, "price": 480.0},
+        {"width_cm": 110, "height_cm": 85, "material": "iron", "complexity": 7, "price": 350.0},
+        {"width_cm": 55, "height_cm": 45, "material": "steel", "complexity": 5, "price": 260.0},
+    ]
+    return pd.DataFrame(data)
 
 
-class QuoteRequest(BaseModel):
-    width_cm: float
-    height_cm: float
-    material: str
-    complexity: float
+def train_and_save_model(output_path: Path) -> Path:
+    """Train a pipeline (preprocess + model) and save it to the given path."""
+    dataset = build_sample_dataset()
+    target_column = "price"
+    feature_columns = [col for col in dataset.columns if col != target_column]
+
+    categorical_features = ["material"]
+    numeric_features = [col for col in feature_columns if col not in categorical_features]
+
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ("material_ohe", OneHotEncoder(handle_unknown="ignore"), categorical_features),
+        ],
+        remainder="passthrough",
+    )
+
+    model = RandomForestRegressor(n_estimators=200, random_state=42)
+
+    pipeline = Pipeline(steps=[
+        ("preprocess", preprocessor),
+        ("model", model),
+    ])
+
+    X = dataset[feature_columns]
+    y = dataset[target_column]
+
+    pipeline.fit(X, y)
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    joblib.dump(pipeline, output_path)
+
+    return output_path
 
 
-_MODEL_PATH = Path(__file__).resolve().parent / "quote_model.pkl"
-_MODEL_PIPELINE = None
+def main() -> None:
+    model_path = Path(__file__).resolve().parent / "quote_model.pkl"
+    saved_path = train_and_save_model(model_path)
+    print(f"Model pipeline trained and saved to: {saved_path}")
 
 
-def _get_model_pipeline():
-    global _MODEL_PIPELINE
-    if _MODEL_PIPELINE is None:
-        if not _MODEL_PATH.exists():
-            raise HTTPException(status_code=503, detail="Model not available. Train it first by running train_model.py")
-        try:
-            _MODEL_PIPELINE = joblib.load(_MODEL_PATH)
-        except Exception as exc:
-            raise HTTPException(status_code=500, detail="Failed to load model pipeline") from exc
-    return _MODEL_PIPELINE
-
-
-@app.post("/api/generate-quote")
-def generate_quote(payload: QuoteRequest):
-    model = _get_model_pipeline()
-    try:
-        try:
-            payload_dict = payload.model_dump()  # Pydantic v2
-        except AttributeError:
-            payload_dict = payload.dict()  # Pydantic v1 fallback
-        # Only allow iron and steel for now
-        allowed_materials = {"iron", "steel"}
-        if str(payload_dict.get("material", "")).lower() not in allowed_materials:
-            raise HTTPException(status_code=400, detail="Invalid material. Allowed: iron, steel")
-        features_df = pd.DataFrame([payload_dict])
-        prediction = model.predict(features_df)
-        estimated_price = float(prediction[0])
-        return {"estimated_price": round(estimated_price, 2)}
-    except HTTPException:
-        raise
-    except Exception as exc:
-        raise HTTPException(status_code=500, detail="Failed to generate quote") from exc
-
-
-# How to start the server:
-# 1) Open a terminal and navigate to this 'backend' directory:
-#    cd backend
-# 2) Install dependencies:
-#    pip install -r requirements.txt
-# 3) Start the development server:
-#    uvicorn main:app --reload --host 0.0.0.0 --port 8000
-
-
+if __name__ == "__main__":
+    main()

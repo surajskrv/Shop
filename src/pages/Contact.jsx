@@ -34,7 +34,7 @@ export default function Contact() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    
+
     if (touched[name]) {
       const error = validateField(name, value);
       setFieldErrors(prev => ({ ...prev, [name]: error }));
@@ -50,17 +50,17 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validate all fields
     const errors = {};
     Object.keys(formData).forEach(key => {
       const error = validateField(key, formData[key]);
       if (error) errors[key] = error;
     });
-    
+
     setFieldErrors(errors);
     setTouched({ name: true, email: true, message: true });
-    
+
     if (Object.keys(errors).length > 0) {
       return;
     }
@@ -152,7 +152,7 @@ export default function Contact() {
           className="py-20 px-4 text-center"
         >
           <div className="max-w-4xl mx-auto">
-            <motion.h1 
+            <motion.h1
               className="text-5xl md:text-6xl font-extrabold text-steel mb-6 drop-shadow-2xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -160,13 +160,13 @@ export default function Contact() {
             >
               Contact Us
             </motion.h1>
-            <motion.p 
+            <motion.p
               className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              Ready to start your project? Get in touch with us today for a free consultation 
+              Ready to start your project? Get in touch with us today for a free consultation
               and quote. We're here to help bring your vision to life.
             </motion.p>
           </div>
@@ -182,7 +182,7 @@ export default function Contact() {
               transition={{ duration: 0.8 }}
               className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100"
             >
-              <motion.h2 
+              <motion.h2
                 className="text-3xl font-extrabold text-steel mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -191,7 +191,7 @@ export default function Contact() {
               >
                 Send Us a Message
               </motion.h2>
-              
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -205,14 +205,14 @@ export default function Contact() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     className={`w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:ring-2 focus:ring-safety focus:border-transparent ${
-                      fieldErrors.name && touched.name 
-                        ? "border-red-500 bg-red-50" 
+                      fieldErrors.name && touched.name
+                        ? "border-red-500 bg-red-50"
                         : "border-gray-300 focus:border-safety"
                     }`}
                     placeholder="Your full name"
                   />
                   {fieldErrors.name && touched.name && (
-                    <motion.p 
+                    <motion.p
                       className="mt-2 text-sm text-red-600 flex items-center gap-2"
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -235,14 +235,14 @@ export default function Contact() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     className={`w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:ring-2 focus:ring-safety focus:border-transparent ${
-                      fieldErrors.email && touched.email 
-                        ? "border-red-500 bg-red-50" 
+                      fieldErrors.email && touched.email
+                        ? "border-red-500 bg-red-50"
                         : "border-gray-300 focus:border-safety"
                     }`}
                     placeholder="your.email@example.com"
                   />
                   {fieldErrors.email && touched.email && (
-                    <motion.p 
+                    <motion.p
                       className="mt-2 text-sm text-red-600 flex items-center gap-2"
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -265,14 +265,14 @@ export default function Contact() {
                     onBlur={handleBlur}
                     rows={5}
                     className={`w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:ring-2 focus:ring-safety focus:border-transparent resize-none ${
-                      fieldErrors.message && touched.message 
-                        ? "border-red-500 bg-red-50" 
+                      fieldErrors.message && touched.message
+                        ? "border-red-500 bg-red-50"
                         : "border-gray-300 focus:border-safety"
                     }`}
                     placeholder="Tell us about your project..."
                   />
                   {fieldErrors.message && touched.message && (
-                    <motion.p 
+                    <motion.p
                       className="mt-2 text-sm text-red-600 flex items-center gap-2"
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -301,7 +301,7 @@ export default function Contact() {
                 </motion.button>
 
                 {status === "success" && (
-                  <motion.div 
+                  <motion.div
                     className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -314,7 +314,7 @@ export default function Contact() {
                 )}
 
                 {status === "error" && (
-                  <motion.div 
+                  <motion.div
                     className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -337,20 +337,20 @@ export default function Contact() {
               className="space-y-8"
             >
               {/* Contact Information */}
-              <motion.div 
+              <motion.div
                 className="bg-gradient-to-br from-steel to-industrial rounded-2xl p-8 text-white"
                 variants={containerVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
               >
-                <motion.h2 
+                <motion.h2
                   className="text-3xl font-extrabold mb-6"
                   variants={itemVariants}
                 >
                   Get In Touch
                 </motion.h2>
-                
+
                 <div className="space-y-6">
                   {contactInfo.map((info, index) => (
                     <motion.div
@@ -419,4 +419,4 @@ export default function Contact() {
       <Footer />
     </>
   );
-} 
+}

@@ -74,5 +74,3 @@ export default function ImageModal({ imageUrl, title, onClose }) {
 		</motion.div>
 	);
 }
-
-

@@ -7,11 +7,7 @@
 body {
   font-family: 'Roboto', system-ui, sans-serif;
   background-color: #f7f7f7;
-  color: #333333; /* matches tailwind color 'dark-steel' */
-}
-
-@layer components {
-  .btn-secondary {
-    @apply bg-transparent border border-industrial text-industrial hover:bg-industrial hover:text-white px-4 py-2 rounded-lg font-semibold transition;
-  }
+  color: #333333; /* Using dark-steel */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

@@ -41,7 +41,7 @@ export default function Footer() {
         </svg>
       </div>
 
-      <motion.div 
+      <motion.div
         className="relative z-10 max-w-6xl mx-auto px-4 py-12"
         variants={containerVariants}
         initial="hidden"
@@ -55,7 +55,7 @@ export default function Footer() {
               Contact Us
             </h3>
             <div className="space-y-3">
-              <motion.div 
+              <motion.div
                 className="flex items-center gap-3 group"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
@@ -65,7 +65,7 @@ export default function Footer() {
                   123 Industrial Ave, Patna, India
                 </span>
               </motion.div>
-              <motion.div 
+              <motion.div
                 className="flex items-center gap-3 group"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
@@ -75,7 +75,7 @@ export default function Footer() {
                   555-123-4567
                 </span>
               </motion.div>
-              <motion.div 
+              <motion.div
                 className="flex items-center gap-3 group"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
@@ -130,7 +130,7 @@ export default function Footer() {
                   Sunday: Closed
                 </p>
               </div>
-              
+
               <div>
                 <h4 className="font-semibold text-gray-200 mb-3">Follow Us</h4>
                 <div className="flex gap-4">
@@ -157,7 +157,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <motion.div 
+        <motion.div
           className="pt-8 border-t border-white/20 text-center"
           variants={itemVariants}
         >
@@ -166,15 +166,15 @@ export default function Footer() {
               © {currentYear} MetalWorks. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm text-gray-300">
-              <motion.a 
-                href="#" 
+              <motion.a
+                href="#"
                 className="hover:text-safety transition-colors duration-300"
                 whileHover={{ scale: 1.05 }}
               >
                 Privacy Policy
               </motion.a>
-              <motion.a 
-                href="#" 
+              <motion.a
+                href="#"
                 className="hover:text-safety transition-colors duration-300"
                 whileHover={{ scale: 1.05 }}
               >
@@ -186,4 +186,4 @@ export default function Footer() {
       </motion.div>
     </footer>
   );
-} 
+}

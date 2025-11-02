@@ -2,7 +2,7 @@
 export default {
   content: [
     "./src/**/*.{js,jsx,ts,tsx,html}"
-  ], // Add your template paths
+  ],
   theme: {
     extend: {
       fontFamily: {

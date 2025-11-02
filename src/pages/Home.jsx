@@ -6,6 +6,7 @@ import WhyChooseUs from "../components/WhyChooseUs";
 import StatsBand from "../components/StatsBand";
 import CTASection from "../components/CTASection";
 import Footer from "../components/Footer";
+import BeforeAfter from "../components/BeforeAfter"; // Import the new component
 
 export default function Home() {
   return (
@@ -15,8 +16,9 @@ export default function Home() {
       <StatsBand />
       <ServicesOverview />
       <WhyChooseUs />
+      <BeforeAfter /> {/* Add the new component here */}
       <CTASection />
       <Footer />
     </>
   );
-} 
+}

@@ -66,12 +66,12 @@ export default function ServicesOverview() {
             Our Metal Fabrication Services
           </h2>
           <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            From laser cutting to full fabrication, we offer a complete range of services for industrial and commercial clients. 
+            From laser cutting to full fabrication, we offer a complete range of services for industrial and commercial clients.
             Our advanced equipment and skilled team ensure top quality and fast turnaround.
           </p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
           variants={containerVariants}
           initial="hidden"
@@ -82,7 +82,7 @@ export default function ServicesOverview() {
             <motion.div
               key={service.title}
               variants={itemVariants}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.05,
                 transition: { duration: 0.2 }
               }}
@@ -90,15 +90,15 @@ export default function ServicesOverview() {
             >
               {/* Background gradient on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-industrial/5 to-safety/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              
-              <motion.div 
+
+              <motion.div
                 className="mb-6 text-industrial group-hover:text-safety transition-colors duration-300 relative z-10"
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.6 }}
               >
                 {service.icon}
               </motion.div>
-              
+
               <div className="relative z-10">
                 <h3 className="font-bold text-xl mb-3 text-steel group-hover:text-industrial transition-colors duration-300">
                   {service.title}
@@ -106,7 +106,7 @@ export default function ServicesOverview() {
                 <p className="text-gray-600 mb-4 leading-relaxed">
                   {service.desc}
                 </p>
-                
+
                 <div className="space-y-2">
                   {service.features.map((feature, idx) => (
                     <motion.div
@@ -128,4 +128,4 @@ export default function ServicesOverview() {
       </motion.div>
     </section>
   );
-} 
+}

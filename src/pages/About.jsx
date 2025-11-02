@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { FaAward, FaUsers, FaClock, FaShieldAlt, FaIndustry, FaHandshake } from "react-icons/fa";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Testimonials from "../components/Testimonials"; // Import the new component
 
 const values = [
   {
@@ -63,7 +64,7 @@ export default function About() {
           className="py-20 px-4 text-center"
         >
           <div className="max-w-4xl mx-auto">
-            <motion.h1 
+            <motion.h1
               className="text-5xl md:text-6xl font-extrabold text-steel mb-6 drop-shadow-2xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -71,20 +72,20 @@ export default function About() {
             >
               About MetalWorks
             </motion.h1>
-            <motion.p 
+            <motion.p
               className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              For over 25 years, we've been at the forefront of metal fabrication, 
+              For over 25 years, we've been at the forefront of metal fabrication,
               delivering precision and quality to industries across the region.
             </motion.p>
           </div>
         </motion.div>
 
         {/* Story Section */}
-        <motion.div 
+        <motion.div
           className="max-w-6xl mx-auto px-4 py-16"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -103,20 +104,20 @@ export default function About() {
               </h2>
               <div className="space-y-4 text-gray-700 leading-relaxed">
                 <p>
-                  Founded in 1998, MetalWorks began as a small family-owned workshop with a big vision: 
+                  Founded in 1998, MetalWorks began as a small family-owned workshop with a big vision:
                   to deliver exceptional metal fabrication services that exceed customer expectations.
                 </p>
                 <p>
-                  Over the years, we've grown from a local workshop to a trusted partner for businesses 
+                  Over the years, we've grown from a local workshop to a trusted partner for businesses
                   across multiple industries, always maintaining our commitment to quality and customer satisfaction.
                 </p>
                 <p>
-                  Today, we operate state-of-the-art facilities with advanced equipment and a team of 
+                  Today, we operate state-of-the-art facilities with advanced equipment and a team of
                   skilled professionals dedicated to bringing your metal fabrication projects to life.
                 </p>
               </div>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -152,7 +153,7 @@ export default function About() {
         </motion.div>
 
         {/* Values Section */}
-        <motion.div 
+        <motion.div
           className="bg-gradient-to-r from-steel to-industrial py-16 px-4"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -175,7 +176,7 @@ export default function About() {
               </p>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
               variants={containerVariants}
               initial="hidden"
@@ -186,13 +187,13 @@ export default function About() {
                 <motion.div
                   key={value.title}
                   variants={itemVariants}
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.05,
                     transition: { duration: 0.2 }
                   }}
                   className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center hover:bg-white/20 transition-all duration-300 border border-white/20"
                 >
-                  <motion.div 
+                  <motion.div
                     className="mb-6 text-safety flex justify-center"
                     whileHover={{ rotate: 360 }}
                     transition={{ duration: 0.6 }}
@@ -212,9 +213,10 @@ export default function About() {
         </motion.div>
 
 
+        <Testimonials /> {/* Add the new component here */}
 
         {/* CTA Section */}
-        <motion.div 
+        <motion.div
           className="bg-gradient-to-r from-safety to-orange-600 py-16 px-4"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -222,7 +224,7 @@ export default function About() {
           transition={{ duration: 0.8 }}
         >
           <div className="max-w-4xl mx-auto text-center text-white">
-            <motion.h2 
+            <motion.h2
               className="text-3xl md:text-4xl font-extrabold mb-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -231,7 +233,7 @@ export default function About() {
             >
               Ready to Work With Us?
             </motion.h2>
-            <motion.p 
+            <motion.p
               className="text-xl mb-8 text-white/90"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -276,4 +278,4 @@ export default function About() {
       <Footer />
     </>
   );
-} 
+}

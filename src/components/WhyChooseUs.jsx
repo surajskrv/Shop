@@ -68,12 +68,12 @@ export default function WhyChooseUs() {
             Why Choose MetalWorks?
           </h2>
           <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
-            We combine decades of experience with cutting-edge technology to deliver 
+            We combine decades of experience with cutting-edge technology to deliver
             exceptional results that exceed expectations.
           </p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
           variants={containerVariants}
           initial="hidden"
@@ -84,28 +84,28 @@ export default function WhyChooseUs() {
             <motion.div
               key={reason.title}
               variants={itemVariants}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.05,
                 transition: { duration: 0.2 }
               }}
               className="group bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center hover:bg-white/20 transition-all duration-300 border border-white/20 relative overflow-hidden"
             >
               {/* Animated background */}
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 bg-gradient-to-br from-safety/20 to-orange-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 initial={{ scale: 0 }}
                 whileHover={{ scale: 1 }}
                 transition={{ duration: 0.3 }}
               />
-              
-              <motion.div 
+
+              <motion.div
                 className="mb-6 text-safety group-hover:text-orange-400 transition-colors duration-300 relative z-10 flex justify-center"
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.6 }}
               >
                 {reason.icon}
               </motion.div>
-              
+
               <div className="relative z-10">
                 <h3 className="font-bold text-xl mb-3 text-white group-hover:text-safety transition-colors duration-300">
                   {reason.title}
@@ -118,15 +118,15 @@ export default function WhyChooseUs() {
           ))}
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="text-center mt-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <motion.a 
-            href="/about" 
+          <motion.a
+            href="/about"
             className="inline-flex items-center gap-3 bg-safety text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:bg-orange-600"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -140,4 +140,4 @@ export default function WhyChooseUs() {
       </motion.div>
     </section>
   );
-} 
+}
